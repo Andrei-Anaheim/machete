@@ -66,6 +66,8 @@
 
 .supertable {
     /* width: calc(100vw - 50px); */
+    overflow-x: scroll;
+    overflow-y: scroll;
     border: 1px solid red;
     margin: 10px auto;
     color: black;
@@ -113,6 +115,9 @@
 .violet {
     background-color: blue;
     color: white;
+}
+.none {
+    background-color: none;
 }
 
 .increase {

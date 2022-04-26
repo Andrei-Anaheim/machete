@@ -144,7 +144,7 @@ function getCalendarTable(champ) {
         const headers = ['ср.кэф', 'xG', 'xGA', 'Команда', 'КШ', 'ИТБ', 'Соперник', 'кэф', 'Соперник', 'кэф', 'Соперник', 'кэф', 'Соперник', 'кэф'];
         table.className = 'supertable';
         table.id='supertable';
-        let result = Array(gid_clubs[champ]+2).fill().map(()=>Array(14).fill());
+        let result = Array(gid_clubs[champ]+2).fill().map(()=>Array(players_number).fill());
         for (let i=0; i<gid_clubs[champ]+2; i+=1) {
             const tr = table.insertRow();
             tr.className = 'superrow';
@@ -186,13 +186,13 @@ function getCalendarTable(champ) {
         document.getElementById('container').appendChild(table);
         
         for (let i=2;i<gid_clubs[champ]+2;i+=1) {
-            for (let j=7; j<14;j+=2) {
+            for (let j=7; j<players_number;j+=2) {
                 const color = Number(result[i][j])>6.4? 'brown': Number(result[i][j])>3.8? 'red':Number(result[i][j])>2.7? 'orange':Number(result[i][j])>2.1? 'yellow': Number(result[i][j])>1.7? 'lightgreen': Number(result[i][j])>1.45? 'green':result[i][j]>1.27? 'lightblue': Number(result[i][j])>1.12? 'blue': Number(result[i][j])>1? 'violet': 'none';
                 document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
             }
         }
 
-        for (let i=0; i<14; i+=1) {
+        for (let i=0; i<players_number; i+=1) {
             document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[i].addEventListener('click', ()=>{sortCalendar(i)});
         }
     })
@@ -214,17 +214,25 @@ function sortCalendar(column) {
     if (document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.contains('increase')) {
         document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.remove('increase');
         document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.add('decrease');
-        if(isNaN(table[1][column])) newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
+        if(isNaN(table[1][column])||table[1][column]==='') newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
         else newarr = table.sort((a,b)=>b[column] - a[column]);
     } else {
         document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.add('increase');
         document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.remove('decrease');
-        if(isNaN(table[1][column])) newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
+        if(isNaN(table[1][column])||table[1][column]==='') newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
         else newarr = table.sort((a,b)=>a[column] - b[column]);
     }
     for (let i=0; i<rows-2; i+=1) {
         for (let j=0; j<columns; j+=1) {
-            document.querySelectorAll('.superrow')[i+2].querySelectorAll('.supercell')[j].innerText = table[i][j];
+            document.querySelectorAll('.superrow')[i+2].querySelectorAll('.supercell')[j].innerText = newarr[i][j];
+        }
+    }
+    for (let i=2;i<rows;i+=1) {
+        for (let j=7; j<columns;j+=2) {
+            const color = newarr[i-2][j]===''?'none' : Number(newarr[i-2][j])>6.4? 'brown': Number(newarr[i-2][j])>3.8? 'red':Number(newarr[i-2][j])>2.7? 'orange':Number(newarr[i-2][j])>2.1? 'yellow': Number(newarr[i-2][j])>1.7? 'lightgreen': Number(newarr[i-2][j])>1.45? 'green':newarr[i-2][j]>1.27? 'lightblue': Number(newarr[i-2][j])>1.12? 'blue': Number(newarr[i-2][j])>1? 'violet': 'none';
+            console.log(i,j-7,newarr[i-2][j],color);
+            document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].className = 'supercell'; 
+            document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
         }
     }
     //
