@@ -1,0 +1,131 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.authorization {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth_data {
+    border: 1px solid blue;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font: normal normal 30px/40px Arial;
+}
+
+.password {
+    width: 100%;
+    font: normal normal 30px/40px Arial;
+}
+
+.button {
+    cursor: pointer;
+    width: fit-content;
+    padding: 0 10px;
+    margin: 5px auto;
+}
+
+.auth_error {
+    color: red;
+    font: normal normal 20px/20px Arial;
+}
+
+
+.container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.champs, .settings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+    width: 100vw;
+    margin: 20px 0 5px 0;
+}
+
+.champs li, .settings li {
+    display: inline;
+    justify-content: space-between;
+    border: 1px solid blue;
+    border-radius: 10px;
+    font: normal normal 20px/20px Arial;
+    width: 8vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+.supertable {
+    /* width: calc(100vw - 50px); */
+    border: 1px solid red;
+    margin: 10px auto;
+    color: black;
+}
+
+.supercell {
+    border: 1px solid green;
+    font: normal normal 15px/20px Arial;
+    text-align: center;
+}
+
+.brown {
+    background-color: brown;
+    color:white;
+}
+
+.red {
+    background-color: red;
+    color:white;
+}
+.orange{
+    background-color: orange;
+    color:black;
+}
+.yellow {
+    background-color: yellow;
+    color: black;
+}
+.lightgreen {
+    background-color: lightgreen;
+    color: black;
+}
+.green {
+    background-color: green;
+    color:white;
+}
+.lightblue {
+    background-color: lightblue;
+    color: black
+}
+.blue {
+    background-color: blueviolet;
+    color: white;
+}
+.violet {
+    background-color: blue;
+    color: white;
+}
+
+.increase {
+    background-color: greenyellow;
+}
+.decrease {
+    background-color: red;
+}
+
+.choosen {
+    background-color: aqua;
+}
+
+.hide {
+    display: none;
+}
