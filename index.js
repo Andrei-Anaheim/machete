@@ -227,4 +227,5 @@ function sortCalendar(column) {
             document.querySelectorAll('.superrow')[i+2].querySelectorAll('.supercell')[j].innerText = table[i][j];
         }
     }
+    //
 }
