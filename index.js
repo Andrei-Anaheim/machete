@@ -27,7 +27,7 @@
 
 //0. Авторизация
 document.getElementById('auth_ok').addEventListener('click',sezamOpen);
-const password = 'стасбенч';
+const password = '';
 
 function sezamOpen() {
     document.getElementById('auth_error').classList.add('hide');
@@ -84,7 +84,6 @@ function addEventListeners() {
             for (let j=0; j<champs.length; j+=1) {
                 champs[j].classList.remove('choosen');
             }
-            console.log(champs[i]);
             champs[i].classList.add('choosen');
             for (let k=0; k<settings.length; k+=1) {
                 if (settings[k].classList.value==='choosen') param = k;
@@ -113,17 +112,14 @@ function addEventListeners() {
 }
 
 function showStatistics(champ, param) {
-    if (param === 0) showCalendar(champ)
-    // else if (param === 1) showLast5(champ)
+    if (param === 0) getCalendarTable(champ)
+    else if (param === 1) showLast5(champ)
     // else if( param === 2) showAllTime(champ)
 }
 
-function showCalendar(champ) {
-    getCalendarTable(champ);
-}
-
 let result = Array(22).fill().map(()=>Array(14).fill());
-const gid_calendar = [0,1968139431,1054150177,1855716394,2119734893,947408769,1764379034,567087809,192465817,430268839]
+const gid_calendar = [0,1968139431,1054150177,1855716394,2119734893,947408769,1764379034,567087809,192465817,430268839];
+const gid_xg = [1723156808]
 const gid_clubs = [20,20,18,20,20,16,24,20,18,18]
 function getCalendarTable(champ) {
     const url = `https://docs.google.com/spreadsheets/d/1UdQlPmTOEp59FRsR-tidwryW0YjxiAfiM0sn-N3p5Ek/gviz/tq?gid=${gid_calendar[champ]}`;
@@ -230,10 +226,227 @@ function sortCalendar(column) {
     for (let i=2;i<rows;i+=1) {
         for (let j=7; j<columns;j+=2) {
             const color = newarr[i-2][j]===''?'none' : Number(newarr[i-2][j])>6.4? 'brown': Number(newarr[i-2][j])>3.8? 'red':Number(newarr[i-2][j])>2.7? 'orange':Number(newarr[i-2][j])>2.1? 'yellow': Number(newarr[i-2][j])>1.7? 'lightgreen': Number(newarr[i-2][j])>1.45? 'green':newarr[i-2][j]>1.27? 'lightblue': Number(newarr[i-2][j])>1.12? 'blue': Number(newarr[i-2][j])>1? 'violet': 'none';
-            console.log(i,j-7,newarr[i-2][j],color);
             document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].className = 'supercell'; 
             document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
         }
     }
     //
+}
+let temp_copy_table_last5 = [];
+function showLast5(champ) {
+    const url = `https://docs.google.com/spreadsheets/d/1UdQlPmTOEp59FRsR-tidwryW0YjxiAfiM0sn-N3p5Ek/gviz/tq?gid=${gid_xg[champ]}`;
+    fetch(url)
+    .then(res => res.text())
+    .then(data => {
+        // console.log(data)
+        const data2 = JSON.parse(data.substr(47).slice(0,-2));
+        const columns = 24;
+        const rows = data2.table.rows.length;
+        const table = document.createElement('table');
+        const headers = ['Игрок', 'Клуб', 'Позиция (Wyscout)', 'Позиция (sports)', 'Цена', 'МО ФО', 'ООП', 'инд. опасности', 'app', 'min', 'min/app', 'goals', 'xg', 'xg/90', 'assists', 'xa', 'xa/90','yellow', 'red', 'shots', 'SOT %', 'key pass', 'tib/90', 'pen'];
+        table.className = 'supertable';
+        table.id='supertable';
+        let result = Array(rows+1).fill().map(()=>Array(columns).fill());
+        for (let i=0; i<rows+1; i+=1) {
+            const tr = table.insertRow();
+            tr.className = 'superrow';
+            for (let j=0; j<columns; j+=1) {
+                const td = tr.insertCell();
+                td.className = 'supercell_xg';
+                td.style.width = j<2? '10vw': j===2?'8vw': j<5? '3vw' : j<7? '2vw': j===7? '4vw': '3vw';
+                if (i === 0) {
+                    td.appendChild(document.createTextNode(`${headers[j]}`));
+                    result[i][j] = headers[j];
+                } else {
+                    if (j<8) {
+                        if (data2.table.rows[i-1].c[j+1] && Object.keys(data2.table.rows[i-1].c[j+1]).includes('v')) {
+                            td.appendChild(document.createTextNode(`${data2.table.rows[i-1].c[j+1].v}`));
+                            result[i][j] = data2.table.rows[i-1].c[j+1].v;
+                        } else {
+                            result[i][j] = '';
+                        }
+                    } else {
+                        if (data2.table.rows[i-1].c[j+2] && Object.keys(data2.table.rows[i-1].c[j+2]).includes('v')) {
+                            td.appendChild(document.createTextNode(`${data2.table.rows[i-1].c[j+2].v}`));
+                            result[i][j] = data2.table.rows[i-1].c[j+2].v;
+                        } else {
+                            result[i][j] = '';
+                        }
+                    }
+                }
+            }
+        }
+        temp_copy_table_last5 = Array.from(result);
+        const sorting_buttons = document.createElement('div');
+        sorting_buttons.className = 'sorting_buttons';
+        const remove_empty = document.createElement('div');
+        remove_empty.className = 'button';
+        remove_empty.id = 'remove_empty';
+        remove_empty.innerText = 'Удалить пустые';
+        sorting_buttons.appendChild(remove_empty);
+        const select_club = document.createElement('select');
+        select_club.className = 'select_club';
+        select_club.id = 'select_club';
+        const select_club_option = document.createElement('option');
+        select_club_option.innerText = `Выберите клуб`;
+        select_club_option.value = 0;
+        select_club_option.selected = true;
+        select_club.appendChild(select_club_option);
+        const clubs = [];
+        for (let i=0; i<result.length; i+=1) {
+            if (result[i][1]!=='' && result[i][1]!=='Клуб') clubs.push(result[i][1]);
+        }
+        const uniq_clubs = Array.from(new Set(clubs)).sort();
+        for (let i=0; i<gid_clubs[champ]; i+=1) {
+            const select_club_option = document.createElement('option');
+            select_club_option.value = `${uniq_clubs[i]}`;
+            select_club_option.innerText = `${uniq_clubs[i]}`;
+            select_club.appendChild(select_club_option);
+        }
+        sorting_buttons.appendChild(select_club);
+        const select_pos = document.createElement('select');
+        select_pos.className = 'select_pos';
+        select_pos.id = 'select_pos';
+        const select_pos_option = document.createElement('option');
+        select_pos_option.innerText = `Выберите позицию`;
+        select_pos_option.value = 0;
+        select_pos_option.selected = true;
+        select_pos.appendChild(select_pos_option);
+        const pos = ['вр','защ','пз','нап'];
+        for (let i=0; i<4; i+=1) {
+            const select_pos_option = document.createElement('option');
+            select_pos_option.value = `${pos[i]}`;
+            select_pos_option.innerText = `${pos[i]}`;
+            select_pos.appendChild(select_pos_option);
+        }
+        sorting_buttons.appendChild(select_pos);
+        const reset_filter = document.createElement('div');
+        reset_filter.className = 'button';
+        reset_filter.id = 'reset_filter';
+        reset_filter.innerText = 'Сбросить фильтры';
+        sorting_buttons.appendChild(reset_filter);
+        document.getElementById('container').appendChild(sorting_buttons);
+        document.getElementById('container').appendChild(table);
+
+        for (let i=0; i<columns; i+=1) {
+            document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[i].addEventListener('click', ()=>{sortLast5(i)});
+        }
+        document.getElementById('remove_empty').addEventListener('click',removeEmpty);
+        document.getElementById('select_club').addEventListener('change', updateTable);
+        document.getElementById('select_pos').addEventListener('change', updateTable);
+        document.getElementById('reset_filter').addEventListener('click',resetFilter);
+    })
+}
+function sortLast5(column) {
+    const rows = document.querySelectorAll('.superrow').length;
+    const columns = 24;
+    let table = Array(rows-1).fill().map(()=>Array(columns).fill(''));
+    let newarr = [];
+    for (let i=0; i<rows-1; i+=1) {
+        for (let j=0; j<columns; j+=1) {
+            table[i][j] = document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText;
+        }
+    }
+    for (let j=0; j<columns; j+=1) {
+        if (j!==column) document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[j].className = 'supercell_xg';
+    }
+    if (document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.contains('decrease')) {
+        document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.add('increase');
+        document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.remove('decrease');
+        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
+        else newarr = table.sort((a,b)=>a[column] - b[column]);   
+    } else {
+        document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.remove('increase');
+        document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.add('decrease');
+        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
+        else newarr = table.sort((a,b)=>b[column] - a[column]);    
+    }
+    console.log(newarr);
+    console.log(rows);
+    for (let i=0; i<newarr.length; i+=1) {
+        for (let j=0; j<columns; j+=1) {
+            console.log(i+1,j)
+            document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText = newarr[i][j];
+        }
+    }
+}
+
+function updateTable() {
+    const rows = temp_copy_table_last5.length;
+    const current_rows = document.querySelectorAll('.superrow').length;
+    const columns = 24;
+    for (let j=0; j<columns; j+=1) {
+        document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[j].className = 'supercell_xg';
+    }
+    const table = Array.from(temp_copy_table_last5);
+    const club = document.getElementById('select_club').value
+    const pos = document.getElementById('select_pos').value
+    let newtable = [];
+    if (club !== '0' && pos !== '0') {
+        newtable = table.filter((el)=>el[1]===club).filter((el)=>el[3]===pos);
+    } else if (club !== '0') {
+        newtable = table.filter((el)=>el[1]===club);
+    } else if (pos !== '0') {
+        newtable = table.filter((el)=>el[3]===pos);
+    }
+    console.log(current_rows-1, newtable.length);
+    if (current_rows-1-newtable.length >= 0) {
+        for (let i=0; i<current_rows-1-newtable.length; i+=1) {
+            document.getElementById('supertable').deleteRow(1);
+        }
+    } else {
+        for (let i=0; i<newtable.length - current_rows+1; i+=1) {
+            const tr = document.getElementById('supertable').insertRow(1);
+            tr.className = 'superrow';
+            for (let j=0; j<columns; j+=1) {
+                const td = tr.insertCell();
+                td.className = 'supercell_xg';
+                td.style.width = j<2? '10vw': j===2?'8vw': j<5? '3vw' : j<7? '2vw': j===7? '4vw': '3vw';
+            }
+        }
+    }
+    for (let i=0; i<newtable.length; i+=1) {
+        for (let j=0; j<columns; j+=1) {
+            document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText = newtable[i][j];
+        }
+    }
+}
+
+function resetFilter() {
+    let currentparam = 0;
+    let currentchamp = 0;
+    const champs = document.getElementById('champs').children;
+    const settings = document.getElementById('settings').children;
+    for (let k=0; k<settings.length; k+=1) {
+        if (settings[k].classList.value==='choosen') currentparam = k;
+    }
+    for (let k=0; k<champs.length; k+=1) {
+        if (champs[k].classList.value==='choosen') currentchamp = k;
+    }
+    document.getElementById('container').removeChild(document.querySelector('.sorting_buttons'));
+    document.getElementById('container').removeChild(document.getElementById('supertable'));
+    showStatistics(currentchamp,currentparam); 
+}
+
+function removeEmpty() {
+    const rows = document.querySelectorAll('.superrow').length;
+    const columns = 24;
+    let table = Array(rows-1).fill().map(()=>Array(columns).fill(''));
+    let newarr = [];
+    for (let i=0; i<rows-1; i+=1) {
+        for (let j=0; j<columns; j+=1) {
+            table[i][j] = document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText;
+        }
+    }
+    const newtable = table.filter(el=>el[0]!=='');
+    for (let i=0; i<table.length-newtable.length; i+=1) {
+        document.getElementById('supertable').deleteRow(1);
+    }
+    for (let i=0; i<newtable.length; i+=1) {
+        for (let j=0; j<columns; j+=1) {
+            document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText = newtable[i][j];
+        }
+    }
+    document.getElementById('remove_empty').classList.add('choosen');
+    document.getElementById('remove_empty').setAttribute('style', 'pointer-events:none');
 }

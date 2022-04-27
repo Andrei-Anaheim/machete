@@ -53,7 +53,15 @@
     margin: 20px 0 5px 0;
 }
 
-.champs li, .settings li {
+.sorting_buttons {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-around; */
+    width: 100vw;
+    margin: 5px 0;
+}
+
+.champs li{
     display: inline;
     justify-content: space-between;
     border: 1px solid blue;
@@ -63,6 +71,27 @@
     text-align: center;
     cursor: pointer;
 }
+
+.settings li, .button {
+    display: inline;
+    justify-content: space-between;
+    border: 1px solid blue;
+    border-radius: 10px;
+    font: normal normal 20px/20px Arial;
+    width: 15vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+.select_club, .select_pos {
+    font: normal normal 20px/20px Arial;
+    text-align: center;
+    width: 25vw;
+    margin: 0 auto;
+}
+/* select, option{
+    background-color: aqua; 
+ } */
 
 .supertable {
     /* width: calc(100vw - 50px); */
@@ -76,6 +105,12 @@
 .supercell {
     border: 1px solid green;
     font: normal normal 15px/20px Arial;
+    text-align: center;
+}
+
+.supercell_xg {
+    border: 1px solid green;
+    font: normal normal 12px/20px Arial;
     text-align: center;
 }
 
