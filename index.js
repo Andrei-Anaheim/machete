@@ -80,7 +80,9 @@ function addEventListeners() {
             let param = 0;
             e.stopPropagation();
             e.preventDefault();
-            document.getElementById('container').removeChild(document.getElementById('supertable'));
+            if (document.getElementById('supertable')) document.getElementById('container').removeChild(document.getElementById('supertable'));
+            if (document.getElementById('supertable2')) document.getElementById('container').removeChild(document.getElementById('supertable2'));
+            if (document.getElementById('sorting_buttons')) document.getElementById('container').removeChild(document.getElementById('sorting_buttons'));
             for (let j=0; j<champs.length; j+=1) {
                 champs[j].classList.remove('choosen');
             }
@@ -97,7 +99,9 @@ function addEventListeners() {
             let champ = 0;
             e.stopPropagation();
             e.preventDefault();
-            document.getElementById('container').removeChild(document.getElementById('supertable'));
+            if (document.getElementById('supertable')) document.getElementById('container').removeChild(document.getElementById('supertable'));
+            if (document.getElementById('supertable2')) document.getElementById('container').removeChild(document.getElementById('supertable2'));
+            if (document.getElementById('sorting_buttons')) document.getElementById('container').removeChild(document.getElementById('sorting_buttons'));
             for (let j=0; j<settings.length; j+=1) {
                 settings[j].classList.remove('choosen');
             }
@@ -139,11 +143,11 @@ function getCalendarTable(champ) {
         const table = document.createElement('table');
         const headers = ['ср.кэф', 'xG', 'xGA', 'Команда', 'КШ', 'ИТБ', 'Соперник', 'кэф', 'Соперник', 'кэф', 'Соперник', 'кэф', 'Соперник', 'кэф'];
         table.className = 'supertable';
-        table.id='supertable';
+        table.id='supertable2';
         let result = Array(gid_clubs[champ]+2).fill().map(()=>Array(players_number).fill());
         for (let i=0; i<gid_clubs[champ]+2; i+=1) {
             const tr = table.insertRow();
-            tr.className = 'superrow';
+            tr.className = 'superrow2';
             for (let j=0; j<players_number; j+=1) {
                 const td = tr.insertCell();
                 td.className = 'supercell';
@@ -184,76 +188,86 @@ function getCalendarTable(champ) {
         for (let i=2;i<gid_clubs[champ]+2;i+=1) {
             for (let j=7; j<players_number;j+=2) {
                 const color = Number(result[i][j])>6.4? 'brown': Number(result[i][j])>3.8? 'red':Number(result[i][j])>2.7? 'orange':Number(result[i][j])>2.1? 'yellow': Number(result[i][j])>1.7? 'lightgreen': Number(result[i][j])>1.45? 'green':result[i][j]>1.27? 'lightblue': Number(result[i][j])>1.12? 'blue': Number(result[i][j])>1? 'violet': 'none';
-                document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
+                document.querySelectorAll('.superrow2')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
             }
         }
 
         for (let i=0; i<players_number; i+=1) {
-            document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[i].addEventListener('click', ()=>{sortCalendar(i)});
+            document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[i].addEventListener('click', ()=>{sortCalendar(i)});
         }
     })
 }
 
 function sortCalendar(column) {
-    const rows = document.querySelectorAll('.superrow').length;
+    const rows = document.querySelectorAll('.superrow2').length;
     const columns = 14;
     let table = Array(rows-2).fill().map(()=>Array(columns).fill(''));
     let newarr = [];
     for (let i=0; i<rows-2; i+=1) {
         for (let j=0; j<columns; j+=1) {
-            table[i][j] = document.querySelectorAll('.superrow')[i+2].querySelectorAll('.supercell')[j].innerText;
+            table[i][j] = document.querySelectorAll('.superrow2')[i+2].querySelectorAll('.supercell')[j].innerText;
         }
     }
     for (let j=0; j<columns; j+=1) {
-        if (j!==column) document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[j].className = 'supercell';
+        if (j!==column) document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[j].className = 'supercell';
     }
-    if (document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.contains('increase')) {
-        document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.remove('increase');
-        document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.add('decrease');
+    if (document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[column].classList.contains('increase')) {
+        document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[column].classList.remove('increase');
+        document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[column].classList.add('decrease');
         if(isNaN(table[1][column])||table[1][column]==='') newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
         else newarr = table.sort((a,b)=>b[column] - a[column]);
     } else {
-        document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.add('increase');
-        document.querySelectorAll('.superrow')[1].querySelectorAll('.supercell')[column].classList.remove('decrease');
+        document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[column].classList.add('increase');
+        document.querySelectorAll('.superrow2')[1].querySelectorAll('.supercell')[column].classList.remove('decrease');
         if(isNaN(table[1][column])||table[1][column]==='') newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
         else newarr = table.sort((a,b)=>a[column] - b[column]);
     }
     for (let i=0; i<rows-2; i+=1) {
         for (let j=0; j<columns; j+=1) {
-            document.querySelectorAll('.superrow')[i+2].querySelectorAll('.supercell')[j].innerText = newarr[i][j];
+            document.querySelectorAll('.superrow2')[i+2].querySelectorAll('.supercell')[j].innerText = newarr[i][j];
         }
     }
     for (let i=2;i<rows;i+=1) {
         for (let j=7; j<columns;j+=2) {
             const color = newarr[i-2][j]===''?'none' : Number(newarr[i-2][j])>6.4? 'brown': Number(newarr[i-2][j])>3.8? 'red':Number(newarr[i-2][j])>2.7? 'orange':Number(newarr[i-2][j])>2.1? 'yellow': Number(newarr[i-2][j])>1.7? 'lightgreen': Number(newarr[i-2][j])>1.45? 'green':newarr[i-2][j]>1.27? 'lightblue': Number(newarr[i-2][j])>1.12? 'blue': Number(newarr[i-2][j])>1? 'violet': 'none';
-            document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].className = 'supercell'; 
-            document.querySelectorAll('.superrow')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
+            document.querySelectorAll('.superrow2')[i].querySelectorAll('.supercell')[j-1].className = 'supercell'; 
+            document.querySelectorAll('.superrow2')[i].querySelectorAll('.supercell')[j-1].classList.add(`${color}`);                      
         }
     }
     //
 }
 let temp_copy_table_last5 = [];
 function showLast5(champ) {
+    getCalendarTable(champ);
     const url = `https://docs.google.com/spreadsheets/d/1UdQlPmTOEp59FRsR-tidwryW0YjxiAfiM0sn-N3p5Ek/gviz/tq?gid=${gid_xg[champ]}`;
     fetch(url)
     .then(res => res.text())
     .then(data => {
         // console.log(data)
         const data2 = JSON.parse(data.substr(47).slice(0,-2));
-        const columns = 24;
+        const columns = 26;
         const rows = data2.table.rows.length;
         const table = document.createElement('table');
-        const headers = ['Игрок', 'Клуб', 'Позиция (Wyscout)', 'Позиция (sports)', 'Цена', 'МО ФО', 'ООП', 'инд. опасности', 'app', 'min', 'min/app', 'goals', 'xg', 'xg/90', 'assists', 'xa', 'xa/90','yellow', 'red', 'shots', 'SOT %', 'key pass', 'tib/90', 'pen'];
+        const headers = ['Игрок', 'Клуб', 'Позиция (Wyscout)', 'Позиция (sports)', 'Цена', 'МО ФО', 'ООП', 'инд. опасности', 'app', 'min', 'min/app', 'goals', 'xg', 'xg/90', 'assists', 'xa', 'xa/90','yellow', 'red', 'shots', 'SOT %', 'key pass', 'tib/90', 'pen', 'xg+xa /90', 'кш/итб'];
         table.className = 'supertable';
         table.id='supertable';
         let result = Array(rows+1).fill().map(()=>Array(columns).fill());
+        const calendar_table = document.getElementById('supertable2').querySelectorAll('.superrow2');
+        const club = [];
+        const cleansheet = [];
+        const itb = [];
+        for (let i=2; i< calendar_table.length;i+=1) {
+            club.push(calendar_table[i].querySelectorAll('.supercell')[3].innerText)
+            cleansheet.push(calendar_table[i].querySelectorAll('.supercell')[4].innerText)
+            itb.push(calendar_table[i].querySelectorAll('.supercell')[5].innerText)
+        }
         for (let i=0; i<rows+1; i+=1) {
             const tr = table.insertRow();
             tr.className = 'superrow';
             for (let j=0; j<columns; j+=1) {
                 const td = tr.insertCell();
                 td.className = 'supercell_xg';
-                td.style.width = j<2? '10vw': j===2?'8vw': j<5? '3vw' : j<7? '2vw': j===7? '4vw': '3vw';
+                td.style.width = j<2? '10vw': j===2?'7vw': j<4? '3vw' : j<7? '2vw': j===7? '4vw': j>23? '2vw': '3vw';
                 if (i === 0) {
                     td.appendChild(document.createTextNode(`${headers[j]}`));
                     result[i][j] = headers[j];
@@ -264,6 +278,17 @@ function showLast5(champ) {
                             result[i][j] = data2.table.rows[i-1].c[j+1].v;
                         } else {
                             result[i][j] = '';
+                        }
+                    } else if(j===24) {
+                        td.appendChild(document.createTextNode(`${Math.round((Number(result[i][13])+Number(result[i][16]))*100)/100}`));
+                        result[i][j] = Math.round((Number(result[i][13])+Number(result[i][16]))*100)/100;
+                    } else if(j===25) {
+                        if(result[i][3] === 'вр' || result[i][3] === 'защ') {
+                            td.appendChild(document.createTextNode(`${cleansheet[club.indexOf(result[i][1])]||0}`));
+                            result[i][j] = cleansheet[club.indexOf(result[i][1])]||0;
+                        } else {
+                            td.appendChild(document.createTextNode(`${itb[club.indexOf(result[i][1])]||0}`));
+                            result[i][j] = itb[club.indexOf(result[i][1])]||0;
                         }
                     } else {
                         if (data2.table.rows[i-1].c[j+2] && Object.keys(data2.table.rows[i-1].c[j+2]).includes('v')) {
@@ -279,6 +304,7 @@ function showLast5(champ) {
         temp_copy_table_last5 = Array.from(result);
         const sorting_buttons = document.createElement('div');
         sorting_buttons.className = 'sorting_buttons';
+        sorting_buttons.id = 'sorting_buttons';
         const remove_empty = document.createElement('div');
         remove_empty.className = 'button';
         remove_empty.id = 'remove_empty';
@@ -325,8 +351,8 @@ function showLast5(champ) {
         reset_filter.id = 'reset_filter';
         reset_filter.innerText = 'Сбросить фильтры';
         sorting_buttons.appendChild(reset_filter);
-        document.getElementById('container').appendChild(sorting_buttons);
-        document.getElementById('container').appendChild(table);
+        document.getElementById('container').insertBefore(sorting_buttons,document.getElementById('supertable2'));
+        document.getElementById('container').insertBefore(table,document.getElementById('supertable2'));
 
         for (let i=0; i<columns; i+=1) {
             document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[i].addEventListener('click', ()=>{sortLast5(i)});
@@ -339,7 +365,7 @@ function showLast5(champ) {
 }
 function sortLast5(column) {
     const rows = document.querySelectorAll('.superrow').length;
-    const columns = 24;
+    const columns = 26;
     let table = Array(rows-1).fill().map(()=>Array(columns).fill(''));
     let newarr = [];
     for (let i=0; i<rows-1; i+=1) {
@@ -353,16 +379,14 @@ function sortLast5(column) {
     if (document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.contains('decrease')) {
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.add('increase');
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.remove('decrease');
-        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
-        else newarr = table.sort((a,b)=>a[column] - b[column]);   
+        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
+        else newarr = table.sort((a,b)=>b[column] - a[column]);   
     } else {
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.remove('increase');
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[column].classList.add('decrease');
-        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>b[column].localeCompare(a[column]));
-        else newarr = table.sort((a,b)=>b[column] - a[column]);    
+        if(isNaN(table[0][column])||table[0][column]==='') newarr = table.sort((a,b)=>a[column].localeCompare(b[column]));
+        else newarr = table.sort((a,b)=>a[column] - b[column]);    
     }
-    console.log(newarr);
-    console.log(rows);
     for (let i=0; i<newarr.length; i+=1) {
         for (let j=0; j<columns; j+=1) {
             console.log(i+1,j)
@@ -372,9 +396,10 @@ function sortLast5(column) {
 }
 
 function updateTable() {
+    document.querySelectorAll('.supercell').forEach((el)=>el.classList.remove('bold'));
     const rows = temp_copy_table_last5.length;
     const current_rows = document.querySelectorAll('.superrow').length;
-    const columns = 24;
+    const columns = 26;
     for (let j=0; j<columns; j+=1) {
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[j].className = 'supercell_xg';
     }
@@ -382,10 +407,19 @@ function updateTable() {
     const club = document.getElementById('select_club').value
     const pos = document.getElementById('select_pos').value
     let newtable = [];
+    const calendar_table = document.getElementById('supertable2').querySelectorAll('.superrow2');
+    const selected_club = [];
+    for (let i=2; i< calendar_table.length;i+=1) {
+        selected_club.push(calendar_table[i].querySelectorAll('.supercell')[3].innerText)
+    }
     if (club !== '0' && pos !== '0') {
         newtable = table.filter((el)=>el[1]===club).filter((el)=>el[3]===pos);
+        document.querySelectorAll('.superrow2')[selected_club.indexOf(club)+2].querySelectorAll('.supercell').forEach((el)=>el.classList.add('bold'));
+    } else if (club === '0' &&  pos === '0') {
+        newtable = table.filter((el)=>el[0]!=='Игрок');
     } else if (club !== '0') {
         newtable = table.filter((el)=>el[1]===club);
+        document.querySelectorAll('.superrow2')[selected_club.indexOf(club)+2].querySelectorAll('.supercell').forEach((el)=>el.classList.add('bold'));
     } else if (pos !== '0') {
         newtable = table.filter((el)=>el[3]===pos);
     }
@@ -401,7 +435,7 @@ function updateTable() {
             for (let j=0; j<columns; j+=1) {
                 const td = tr.insertCell();
                 td.className = 'supercell_xg';
-                td.style.width = j<2? '10vw': j===2?'8vw': j<5? '3vw' : j<7? '2vw': j===7? '4vw': '3vw';
+                td.style.width = j<2? '10vw': j===2?'7vw': j<4? '3vw' : j<7? '2vw': j===7? '4vw': j>23? '2vw': '3vw';
             }
         }
     }
@@ -425,12 +459,13 @@ function resetFilter() {
     }
     document.getElementById('container').removeChild(document.querySelector('.sorting_buttons'));
     document.getElementById('container').removeChild(document.getElementById('supertable'));
+    document.getElementById('container').removeChild(document.getElementById('supertable2'));
     showStatistics(currentchamp,currentparam); 
 }
 
 function removeEmpty() {
     const rows = document.querySelectorAll('.superrow').length;
-    const columns = 24;
+    const columns = 26;
     let table = Array(rows-1).fill().map(()=>Array(columns).fill(''));
     let newarr = [];
     for (let i=0; i<rows-1; i+=1) {
