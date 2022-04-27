@@ -27,7 +27,7 @@
 
 //0. Авторизация
 document.getElementById('auth_ok').addEventListener('click',sezamOpen);
-const password = '';
+const password = '1';
 
 function sezamOpen() {
     document.getElementById('auth_error').classList.add('hide');
