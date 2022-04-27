@@ -72,6 +72,19 @@
     cursor: pointer;
 }
 
+@media screen and (max-width: 1000px) {
+    .champs li, .settings li, .button, .select_club, .select_pos, .amount {
+        font: normal normal 10px/10px Arial;
+    }
+    .supercell {
+        font: normal normal 8px/10px Arial;
+    }
+    
+    .supercell_xg {
+        font: normal normal 7px/10px Arial;
+    }
+}
+
 .settings li, .button {
     display: inline;
     justify-content: space-between;

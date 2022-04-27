@@ -27,7 +27,7 @@
 
 //0. Авторизация
 document.getElementById('auth_ok').addEventListener('click',sezamOpen);
-const password = '3';
+const password = '4';
 
 function sezamOpen() {
     document.getElementById('auth_error').classList.add('hide');
@@ -323,15 +323,11 @@ function showLast5(champ,q) {
         select_club_option.value = 0;
         select_club_option.selected = true;
         select_club.appendChild(select_club_option);
-        const clubs = [];
-        for (let i=0; i<result.length; i+=1) {
-            if (result[i][1]!=='' && result[i][1]!=='Клуб') clubs.push(result[i][1]);
-        }
-        const uniq_clubs = Array.from(new Set(clubs)).sort();
+        const clubs = Array.from(club).sort();
         for (let i=0; i<gid_clubs[champ]; i+=1) {
             const select_club_option = document.createElement('option');
-            select_club_option.value = `${uniq_clubs[i]}`;
-            select_club_option.innerText = `${uniq_clubs[i]}`;
+            select_club_option.value = `${clubs[i]}`;
+            select_club_option.innerText = `${clubs[i]}`;
             select_club.appendChild(select_club_option);
         }
         sorting_buttons.appendChild(select_club);
