@@ -27,7 +27,7 @@
 
 //0. Авторизация
 document.getElementById('auth_ok').addEventListener('click',sezamOpen);
-const password = '2';
+const password = '3';
 
 function sezamOpen() {
     document.getElementById('auth_error').classList.add('hide');
@@ -68,7 +68,7 @@ function addSettingsMenu() {
         <ul class="settings" id="settings">
             <li class="choosen">Календарь</li>
             <li>Стата last5</li>
-            <li>Стата alltime</li>
+            <li>Стата season</li>
         </ul>
     </div>`
 }
@@ -117,13 +117,18 @@ function addEventListeners() {
 
 function showStatistics(champ, param) {
     if (param === 0) getCalendarTable(champ)
-    else if (param === 1) showLast5(champ)
-    // else if( param === 2) showAllTime(champ)
+    else if (param === 1) {
+        showLast5(champ,0);
+        setTimeout(()=>{updateTable()},1000);
+    } else if (param === 2) {
+        showLast5(champ,16)
+        setTimeout(()=>{updateTable()},1000);
+    }
 }
 
 let result = Array(22).fill().map(()=>Array(14).fill());
 const gid_calendar = [0,1968139431,1054150177,1855716394,2119734893,947408769,1764379034,567087809,192465817,430268839];
-const gid_xg = [1723156808]
+const gid_xg = [1723156808, 770260717,690509917,837209923,777848473,1012221728,2108505743,1922863228,272272467,154071577];
 const gid_clubs = [20,20,18,20,20,16,24,20,18,18]
 function getCalendarTable(champ) {
     const url = `https://docs.google.com/spreadsheets/d/1UdQlPmTOEp59FRsR-tidwryW0YjxiAfiM0sn-N3p5Ek/gviz/tq?gid=${gid_calendar[champ]}`;
@@ -237,7 +242,7 @@ function sortCalendar(column) {
     //
 }
 let temp_copy_table_last5 = [];
-function showLast5(champ) {
+function showLast5(champ,q) {
     getCalendarTable(champ);
     const url = `https://docs.google.com/spreadsheets/d/1UdQlPmTOEp59FRsR-tidwryW0YjxiAfiM0sn-N3p5Ek/gviz/tq?gid=${gid_xg[champ]}`;
     fetch(url)
@@ -291,9 +296,9 @@ function showLast5(champ) {
                             result[i][j] = itb[club.indexOf(result[i][1])]||0;
                         }
                     } else {
-                        if (data2.table.rows[i-1].c[j+2] && Object.keys(data2.table.rows[i-1].c[j+2]).includes('v')) {
-                            td.appendChild(document.createTextNode(`${data2.table.rows[i-1].c[j+2].v}`));
-                            result[i][j] = data2.table.rows[i-1].c[j+2].v;
+                        if (data2.table.rows[i-1].c[j+2+q] && Object.keys(data2.table.rows[i-1].c[j+2+q]).includes('v')) {
+                            td.appendChild(document.createTextNode(`${data2.table.rows[i-1].c[j+2+q].v}`));
+                            result[i][j] = data2.table.rows[i-1].c[j+2+q].v;
                         } else {
                             result[i][j] = '';
                         }
