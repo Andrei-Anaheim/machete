@@ -27,7 +27,7 @@
 
 //0. Авторизация
 document.getElementById('auth_ok').addEventListener('click',sezamOpen);
-const password = '1';
+const password = '2';
 
 function sezamOpen() {
     document.getElementById('auth_error').classList.add('hide');
@@ -346,6 +346,22 @@ function showLast5(champ) {
             select_pos.appendChild(select_pos_option);
         }
         sorting_buttons.appendChild(select_pos);
+
+        const amount = document.createElement('div');
+        amount.className = 'amount';
+        amount.id = 'amount';
+        amount.innerText = ' Минуты от: 30';
+        const minute_range = document.createElement('input');
+        minute_range.type = 'range';
+        minute_range.id = 'minute_range';
+        minute_range.min = '0';
+        minute_range.value = '30';
+        minute_range.max = '100';
+        minute_range.step = '1';
+        sorting_buttons.appendChild(minute_range);
+        sorting_buttons.appendChild(amount);
+
+
         const reset_filter = document.createElement('div');
         reset_filter.className = 'button';
         reset_filter.id = 'reset_filter';
@@ -361,8 +377,15 @@ function showLast5(champ) {
         document.getElementById('select_club').addEventListener('change', updateTable);
         document.getElementById('select_pos').addEventListener('change', updateTable);
         document.getElementById('reset_filter').addEventListener('click',resetFilter);
+        document.getElementById('minute_range').addEventListener('input', updateMinuteRange);
+        document.getElementById('minute_range').addEventListener('change', updateTable);
     })
 }
+
+function updateMinuteRange() {
+    document.getElementById('amount').innerText = `Минуты от: ${document.getElementById('minute_range').value}`;
+}
+
 function sortLast5(column) {
     const rows = document.querySelectorAll('.superrow').length;
     const columns = 26;
@@ -389,7 +412,6 @@ function sortLast5(column) {
     }
     for (let i=0; i<newarr.length; i+=1) {
         for (let j=0; j<columns; j+=1) {
-            console.log(i+1,j)
             document.querySelectorAll('.superrow')[i+1].querySelectorAll('.supercell_xg')[j].innerText = newarr[i][j];
         }
     }
@@ -397,13 +419,15 @@ function sortLast5(column) {
 
 function updateTable() {
     document.querySelectorAll('.supercell').forEach((el)=>el.classList.remove('bold'));
+    const minute_filter = document.getElementById('minute_range').value;
     const rows = temp_copy_table_last5.length;
     const current_rows = document.querySelectorAll('.superrow').length;
     const columns = 26;
     for (let j=0; j<columns; j+=1) {
         document.querySelectorAll('.superrow')[0].querySelectorAll('.supercell_xg')[j].className = 'supercell_xg';
     }
-    const table = Array.from(temp_copy_table_last5);
+    const saved_table = Array.from(temp_copy_table_last5);
+    const table = saved_table.filter((el)=>Number(el[10])>=Number(minute_filter));
     const club = document.getElementById('select_club').value
     const pos = document.getElementById('select_pos').value
     let newtable = [];
@@ -423,7 +447,6 @@ function updateTable() {
     } else if (pos !== '0') {
         newtable = table.filter((el)=>el[3]===pos);
     }
-    console.log(current_rows-1, newtable.length);
     if (current_rows-1-newtable.length >= 0) {
         for (let i=0; i<current_rows-1-newtable.length; i+=1) {
             document.getElementById('supertable').deleteRow(1);

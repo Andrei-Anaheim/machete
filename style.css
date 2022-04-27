@@ -86,8 +86,12 @@
 .select_club, .select_pos {
     font: normal normal 20px/20px Arial;
     text-align: center;
-    width: 25vw;
+    width: 15vw;
     margin: 0 auto;
+}
+
+.amount {
+    font: normal normal 20px/30px Arial;
 }
 /* select, option{
     background-color: aqua; 
