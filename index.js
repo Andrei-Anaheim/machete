@@ -509,3 +509,50 @@ function removeEmpty() {
     document.getElementById('remove_empty').classList.add('choosen');
     document.getElementById('remove_empty').setAttribute('style', 'pointer-events:none');
 }
+
+
+
+/* Ниже - Ленижман */
+
+const links = [];
+fetch('https://fantasy-h2h.ru/h2h/user_tournaments_list/1090024123/23')
+.then(response => response.text())
+  .then(data => {
+    for (let i=0; i<data.split('<div class="tile_wrapper').length-1; i+=1) {
+        let x = data.split('<div class="tile_wrapper')[i+1].split('<div class="scores">')[1].split('<div class="smlinks">')[0].split('href="');
+        let id = x[x.length-1].split('"')[0]; 
+        links.push(id);
+    }
+    console.log(links)
+    for (let z=0; z<links.length; z+=1) {
+        fetch(`${links[z]}`)
+          .then(response => response.text())
+          .then(data => {
+              let x = data.split('<div class="tour_data"')[1].split('<script type="text/javascript">')[0];
+              let y = x.substring(0, x.length - 26);
+              if (links[z]=='https://fantasy-h2h.ru/analytics/fantasy_team_tour_data/148994/0/') console.log(y)
+              document.getElementById(`champ_${z}`).innerHTML += `<div class="tour_data"${x}`;
+              setTimeout(()=>{
+                document.querySelectorAll('.correct_link').forEach((e)=>e.innerText="");
+                let players = document.getElementById(`champ_${z}`).querySelector('.team_roster').children[0].getElementsByTagName('li');
+                for (let i=0; i<15; i+=1) {
+                    let info = players[i].children[1].children[1].children[0].children[1].children[0].children[0].innerText;
+                    let stat = players[i].children[1].children[0].innerText;
+                    if (links[z]=='https://fantasy-h2h.ru/analytics/fantasy_team_tour_data/148994/0/') console.log(info)
+                    if (info == 'Не вышел в основе') players[i].children[1].children[0].innerText = "-";
+                    else if (info == 'Играет со старта'|| info =='Играл весь матч'||info=='Игровое время (вышел на замену)') {
+                        let points = 0;
+                        for (let j=0; j<players[i].children[1].children[1].children[0].children[1].children.length; j+=1) {
+                            // if (links[z]=='https://fantasy-h2h.ru/analytics/fantasy_team_tour_data/170698/0/') console.log(i,'lalla', players[i].children[1].children[1].children[0].children[1].children[j].children[0].getElementsByTagName('sup')[0].innerHTML)
+                            console.log(links[z],i,j)
+                            if (players[i].children[1].children[1].children[0].children[1].children[j].children[2]) points += Number(players[i].children[1].children[1].children[0].children[1].children[j].children[2].innerText.trim())
+                            else if (Number(players[i].children[1].children[1].children[0].children[1].children[j].children[0].getElementsByTagName('sup')[0].innerText.trim())) points += Number(players[i].children[1].children[1].children[0].children[1].children[j].children[0].getElementsByTagName('sup')[0].innerText.trim())
+                            else points +=0;
+                            }
+                        players[i].children[1].children[0].innerText = points;
+                    }
+                }
+              },100)
+        }) 
+    }
+  })

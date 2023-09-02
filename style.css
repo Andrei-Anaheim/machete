@@ -43,6 +43,16 @@
     display: flex;
     flex-direction: column;
 }
+.container_2 {
+    border: 1px solid grey;
+    border-radius: 10px;
+    margin: 3px auto;
+    padding: 2px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
 
 .champs, .settings {
     display: flex;
@@ -190,4 +200,833 @@
     .supercell_xg {
         font: normal normal 7px/10px Arial;
     }
+}
+
+/*Ленижман*/
+.page_page .container{
+    max-width: 970px;
+    width: 90%;
+    margin: 0 auto;
+}
+.tiles_list{
+    text-align: center;
+    margin-left: -15px;
+}
+.tiles_list .tile_wrapper{
+    display: block;
+    float: left;
+    width: 50%;
+    max-width: 500px;
+    min-width: 300px;
+    box-sizing: border-box;
+}
+.tiles_list .tile_wrapper.left{
+    clear: left;
+}
+.tiles_list .tile_wrapper.right{
+    clear: right;
+}
+.tiles_list .tile{
+    text-align: left;
+    display: block;
+    margin: 5px 0 10px 15px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    transition: border .2s ease-in-out;
+    padding: 4px 10px 4px 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.tiles_list .tile:hover{
+    border-color: #84b5cc;
+    background-color: #FCFCFC;
+}
+
+.tiles_list .tile .logo{
+    width: 73px;
+    float: left;
+    overflow: hidden;
+    margin-right: 5px;
+}
+.tiles_list .tile .logo img{
+    margin: -1px;
+    width: 75px;
+    max-width: 75px;
+}
+
+.tiles_list .tile .title{
+    margin: 5px 5px 0 0;
+}
+.tiles_list .tile .title a{
+    font-weight: bold;
+}
+.tiles_list .tile .title .data{
+    font-size: 12px;
+}
+.tiles_list .tile .data{
+    font-size: 13px;
+}
+.tiles_list .tile .data .name{
+    font-weight: bold;
+    color: #000;
+    margin-left: 5px;
+}
+.tiles_list .tile .data .name:first-child{
+    margin-left: 0;
+}
+
+.tiles_list .tile .title .data .line .value a{
+    color: #4574AF;
+    font-weight: normal;
+    display: inline-block;
+}
+
+.smlinks{
+    color: #CCC;
+}
+
+.smlinks a{
+    color: #8894A8;
+    border-bottom: 1px solid #8894A8;
+    font-size: 12px;
+}
+.smlinks a:hover{
+    color: #08C;
+    border-bottom-color: transparent;
+    text-decoration: none;
+}
+.smlinks a.not_active{
+    opacity: 0.3;
+}
+
+hr.slim{
+    margin: 0;
+}
+.tiles_list .tile_wrapper.bg{
+    opacity: 0.3;
+}
+.tiles_list .tile_wrapper.bg:hover{
+    opacity: 1;
+}
+.tiles_list .tile_wrapper.bg .tile{
+    background-color: #fafafa;
+}
+.tiles_list .scores {
+    margin-bottom: 5px;
+    white-space: nowrap;
+    text-align: right;
+}
+.scores .score_result{
+    display: inline-block;
+    margin-right: 0;
+}
+.scores .score_result:last-child{
+    margin-right: 5px;
+}
+.score_result{
+    padding: 1px 3px 1px 3px;
+    font-size: 13px;
+    color: #FFF !important;
+    border-radius: 3px;
+    margin: 1px;
+    display: inline-block;
+    min-width: 15px;
+    font-weight: normal;
+    background-color: #6998FF;
+    text-align: center;
+}
+.score_result.in_progress{
+    font-style: italic;
+    font-weight: normal;
+    opacity: 0.5;
+}
+.score_result.win{
+    background-color: rgba(38, 153, 2, 0.76);
+}
+.score_result.lose{
+    background-color: rgba(255, 0, 0, 0.56);
+}
+.score_result.tie{
+    background-color: #D6D023;
+}
+
+.scores .mCSB_horizontal.mCSB_inside > .mCSB_container{
+    margin-bottom: 15px;
+}
+
+.scores .mCSB_scrollTools.mCSB_scrollTools_horizontal{
+    top: 21px;
+}
+.highslide-resize{
+    display: none !important;
+}
+.highslide-heading a{
+    color: #D86410;
+    white-space: nowrap;
+}
+.highslide-container div{
+    font-family: inherit !important;
+}
+
+.tour_data{
+    white-space: nowrap;
+}
+.tour_data>div{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 15px;
+}
+.tour_data>div:last-child{
+    margin-right: 0;
+}
+
+.fnts_player_info{
+    position: relative;
+}
+.fnts_player_info img{
+    width: 32px;
+    height: 32px;
+    border: 1px solid #EFEFEF;
+    border-radius: 4px;
+}
+.fnts_player_info a{
+    font-weight: bold;
+}
+.fnts_player_info .score_result{
+    margin: 5px 0 10px 10px;
+    position: absolute;
+    right: 0;
+}
+
+.fnts_player_info .score_result .live_score{
+    position: absolute;
+    right: -12px;
+    bottom: -13px;
+    border: 1px solid #F4F4F4;
+    background-color: #FFFFB3;
+    color: #000;
+    font-size: 10px;
+    line-height: 15px;
+    padding: 0px 2px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.fnts_player_info.extended img{
+    width: 50px;
+    height: 50px;
+}
+.fnts_player_info.extended>div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.fnts_player_info .user_info{
+    line-height: 17px;
+    vertical-align: top;
+    display: inline-block;
+}
+.fnts_player_info .user_info .rate{
+    color: #cccccc;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+div.team_roster{
+    font-family: Verdana, Helvetica !important;
+}
+.team_roster ul{
+    margin: 0;
+}
+
+
+.team_roster li{
+    list-style: none;
+    margin: 1px 0;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 12px;
+    position: relative;
+    line-height: 22px;
+}
+
+.team_roster .logo{
+    height: 20px;
+    width: 20px;
+}
+.team_roster.hockey .logo{
+    height: 16px;
+    padding: 4px 0 0px;
+    width: 29px;
+}
+.team_roster li{
+    text-align: right;
+}
+.team_roster li .player_name{
+    float: left;
+}
+
+.team_roster li.in .player_name{
+    background-color: rgb(167 205 217 / 20%);
+    padding: 0 3px;
+    margin-left: -3px;
+    margin-right: -3px;
+}
+.team_roster li.prev .player_name{
+    background-color: rgb(255 187 187 / 20%);
+    padding: 0 3px;
+    margin-left: -3px;
+    margin-right: -3px;
+    opacity: 0.65;
+}
+.team_roster li.emphasis span:first-of-type{
+    font-weight: bold;
+    color: darkred;
+    text-decoration: underline;
+}
+.team_roster li.reserve{
+    opacity: 0.75;
+}
+
+.team_roster li.is_vice_captain .player_name{
+    font-weight: bold;
+}
+.team_roster li.is_vice_captain .player_name{
+    position: relative;
+}
+/*.team_roster li.is_vice_captain .player_name:after {
+    content: 'v';
+    position: absolute;
+    top: -3px;
+    right: -10px;
+    width: 12px;
+    height: 12px;
+    box-sizing: border-box;
+    background-color: blue;
+    border-radius: 12px;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    font-size: 10px;
+}*/
+
+.team_roster ul li.reserve_first{
+    margin-top: 15px;
+}
+
+.team_roster li.amplua_separator{
+    margin-top: 10px;
+}
+.team_roster li.amplua_separator:before{
+    display: block;
+    content: ' ';
+    position: absolute;
+    border-top: 1px dashed #CCC4C4;
+    height: 1px;
+    width: 100%;
+    top: -5px;
+}
+
+.team_roster li img{
+    float: left;
+    margin-right: 3px;
+}
+
+.team_roster li a{
+    color: inherit;
+}
+
+.team_roster li>div{
+    display: inline-block;
+    line-height: 21px;
+}
+.team_roster li .score{
+    display: inline-block;
+    border-radius: 6px;
+    width: 22px;
+    text-align: center;
+    text-decoration: none !important;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+    margin: 5px 5px 0 5px;
+    font-family: Verdana;
+}
+
+.team_roster li .score_wrapper{
+    width: 24px;
+    margin: 0 2px;
+
+}
+
+.team_roster li.emphasis .score{
+    font-size: 13px;
+}
+
+.team_roster li .score.score_positive{
+    box-shadow: 0px 0px 0pt 1pt #CCFACC;
+    background-color: rgba(204, 250, 204, 0.4);
+}
+.team_roster li .score.game_duration_0{
+    box-shadow: 0px 0px 0pt 1pt #F29B9B;
+    background-color: rgba(239, 139, 154, 0.4);
+    color: #999;
+}
+.team_roster li .score.score_negative{
+    box-shadow: 0px 0px 0pt 1pt #F29B9B;
+    background-color: rgba(255, 6, 6, 0.82);
+    font-size: 10px;
+}
+.team_roster li .score.score_null{
+    box-shadow: 0px 0px 0pt 1pt #CDC6C6;
+    background-color: rgba(210, 197, 199, 0.4);
+    color: #999;
+}
+.team_roster li .score.play_soon{
+    box-shadow: 0px 0px 0pt 1pt #F4F4F4;
+    background-color: rgba(255, 255, 0, 0.30);
+
+    font-size: 11px;
+    font-style: italic  !important;
+    font-weight: normal  !important;
+    color: #999 !important;
+}
+.team_roster li .score.not_played_day{
+    color: #D8D8D8 !important;
+}
+
+.team_roster li .score.play_soon.finished {
+    font-weight: bold !important;
+    font-style: normal !important;
+    color: #000 !important;
+}
+
+.team_roster li.reserve .score.play_soon{
+    color: #333 !important;
+}
+
+.team_roster li:not(.prev)+li.prev{
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #CCCCCC;
+    border-radius: 0;
+}
+
+.team_roster .score.sp_match{
+    cursor: pointer;
+}
+.team_roster .score.play_soon.sp_match.ha{
+    font-size: 8px;
+    line-height: 15px;
+    font-style: normal !important;
+}
+.team_roster .score.play_soon.sp_match.ha.h{
+    color: #32A532 !important;
+}
+.team_roster .score.play_soon.sp_match.ha.a{
+    color: #C16868  !important;
+}
+
+.team_roster li .score.not_active::after{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: url("../../h2h/img/cross.png");
+    top: 7px;
+    margin-left: 4px;
+    opacity: 0.5;
+}
+
+.team_roster li.summary_line{
+    margin-right: -4px;
+    text-align: right;
+    margin-bottom: 10px;
+
+}
+.team_roster li.summary_line .score_wrapper{
+    margin: 0 2px;
+    float: none;
+    position: relative;
+}
+
+.team_roster li.summary_line .score_wrapper.efficiency{
+    margin: 0 10px !important;
+    font-weight: bold;
+    color: darkslategrey;
+    width: auto;
+}
+.team_roster li.summary_line .score_wrapper.efficiency small{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -10px;
+    font-size: 8px;
+    color: #000;
+    right: 12px;
+    padding: 0 1px;
+    background-color: #F3F3FF;
+    border-radius: 4px;
+    line-height: 12px;
+    border: 1px solid #ccc;
+    min-width: 12px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.team_roster  li.summary_line .score_wrapper.efficiency .smart_help + .tooltip .tooltip-inner{
+    white-space: normal;
+    min-width: 200px;
+    font-size: 10px;
+}
+
+.team_roster li.summary_line .score.score_positive{
+    background-color:rgba(61, 131, 200, 0.76);
+    color: #FFF;
+    text-align: center;
+    border-radius: 3px;
+    font-weight: normal;
+    box-shadow: none;
+    padding: 1px;
+    margin: 0 -1px;
+    border: 1px solid #5A8B54;
+}
+.team_roster li.summary_line .score_wrapper:nth-child(even) .score{
+    background-color: rgba(96, 162, 237, 0.85);
+}
+
+.team_roster li.summary_line .score.score_positive.future_score{
+    background-color: #FFFFFF;
+    border-color: #CCC;
+}
+
+.team_roster li.summary_line .score_wrapper:nth-child(even) .score.future_score{
+    background-color: #FFFFFF;
+    border-color: #CCC;
+}
+
+.team_roster li.summary_line .score_wrapper .score .secondary{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -11px;
+    font-size: 8px;
+    color: #000;
+    right: 0;
+    padding: 0 1px;
+    background-color: #F3F3FF;
+    border-radius: 4px;
+    line-height: 12px;
+    border: 1px solid #ccc;
+    min-width: 12px;
+}
+
+.tour_data .best_player_data .h2h_data{
+    margin-top: 20px;
+}
+.tour_data .h2h_data{
+    font-size: 12px;
+}
+.tour_data .section_title{
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+.tour_data .h2h_data a, .tour_data .h2h_data a:hover{
+    border-bottom: 0 !important;
+    text-decoration: none  !important;
+    display: inline-block;
+    vertical-align: middle;
+    /*//color: #333;*/
+}
+.tour_data .h2h_data .t_title{
+    color: #999;
+    border-bottom: 1px solid;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.tour_data .dream_team_data{
+    margin-top: 20px;
+}
+
+.team_field .amplua_line{
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 1px dashed #CCCCCC;
+    font-size: 12px;
+}
+.team_field .amplua_line:first-child{
+    padding-top: 15px;
+}
+
+.team_field .amplua_line .field_player{
+    display: inline-block;
+    text-align: left;
+    margin: 0 20px;
+    position: relative;
+}
+
+.team_field .amplua_line .subline{
+    margin-top: 30px;
+}
+.team_field .amplua_line .subline:first-child{
+    margin-top: 0;
+}
+
+.team_field .field_player .logo{
+    position: relative;
+}
+.team_field .field_player .logo .team_logo{
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: -50%;
+    margin-top: -12px;
+    width: 50px;
+}
+.team_field.football .field_player .logo .team_logo{
+    width: 40px;
+    margin-top: -14px;
+    opacity: 0.9;
+}
+.team_field.basketball .field_player .logo .team_logo{
+    width: 20px;
+    margin-top: -14px;
+    opacity: 0.9;
+    margin-left: -11px;
+}
+.team_field .field_player .value{
+    position: absolute;
+    left:0;
+    top:0;
+}
+.team_field .field_player .value .label{
+    width: 18px;
+    text-align: center;
+    margin-left: -21px;
+    margin-top: 39px;
+    padding: 4px 4px 4px 4px;
+    font-weight: normal;
+    background-color: #2E939B;
+}
+.team_field .field_player .value .label.max{
+    background-color: #48BCC5;
+}
+.team_field .field_player .value .label.captain{
+    position: relative;
+}
+.team_field .field_player .value .label.captain:before{
+    display: block;
+    content: 'с';
+    color: #000;
+    background-color: #FF0;
+    font-weight: bold;
+    padding: 0px 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: -11px;
+    margin-top: -8px;
+    border: 1px solid #999;
+}
+
+.team_field .amplua_line .field_player .info{
+    position: relative;
+    margin-top: -2px;
+}
+
+.team_field .amplua_line .field_player .price{
+    font-size: 11px;
+    font-style: italic;
+    padding-left: 5px;
+    color: #999;
+    position: absolute;
+    right: 0;
+
+}
+
+.team_field .summary{
+    font-size: 16px;
+    padding: 20px 0;
+    text-align: right;
+}
+.team_field .summary .rate{
+    margin-right: 15px;
+}
+.team_field .summary .rate .label{
+    padding: 4px 5px 4px 4px;
+    font-weight: normal;
+}
+.team_field .summary .rate .label.label-score{
+    background-color: #2E939B;
+}
+
+.team_field .donate_button{
+    color: #CBCBCB;
+}
+
+.online_page{
+    background-color: darkred;
+}
+
+.information_block{
+    padding: 5px;
+    font-size: 11px;
+    border: 1px solid #EEEEEE;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 0, 0.29);
+    display: inline-block;
+    color: #666666;
+}
+
+.tooltipster-content{
+    font-size: 11px;
+    font-family: 'Roboto', Tahoma, serif;
+}
+
+.tooltip_html_content{
+    display: none;
+}
+
+#main li{
+    padding-left: 0;
+    font-size: 12px;
+    position: relative;
+
+}
+
+#main-menu .nav{
+    margin-bottom: 0;
+}
+#main-menu li a:before{
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    width: 16px;
+    height: 16px;
+}
+
+#main-menu .nav>li>a{
+    padding-left: 30px;
+    position: relative;
+}
+
+#main-menu li.chat_center a:before{
+    background: url('../../h2h/img/chat.png');
+}
+#main-menu li.franchise a:before{
+    background: url('../../h2h/img/franchise.png');
+}
+
+@media all and (max-width: 767px) {
+    .tiles_list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .tiles_list .tile_wrapper{
+        width: 100%;
+    }
+
+    .main_sportsru_menu{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 0;
+    }
+
+    .main_sportsru_menu:before, .main_sportsru_menu:after{
+        display: none;
+    }
+
+    .tour_data{
+        white-space: nowrap;
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .tour_data>div{
+        margin-right: 0;
+        max-width: 100%;
+        overflow: auto;
+        width: auto;
+    }
+
+    .fnts_player_info .score_result .live_score{
+        right: 0;
+    }
+
+    .team_roster li .player_name{
+        margin-right: 5px;
+    }
+    .team_roster li .player_name .sport_player_name{
+        width: 80px;
+        font-size: 10px;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .team_roster li.in .player_name{
+        margin-left: 0;
+        margin-right: 5px;
+    }
+
+    .team_roster li.in .player_name .sport_player_name{
+        width: 74px;
+    }
+
+    .team_roster li .score{
+        margin: 5px 0 0;
+    }
+
+    .team_roster li .score.not_active::after{
+        margin-left: 2px;
+    }
+
+    .team_roster li.amplua_separator:before{
+        left: 0;
+    }
+
+    .team_roster li small{
+        font-size: 9px;
+    }
+
+    .team_roster li.reserve>div .sport_player_name+small{
+        display: none;
+    }
+
+    .team_roster li .score_wrapper{
+        width: 20px;
+        line-height: 15px;
+    }
+
+    .team_roster li .score{
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 9px;
+    }
+    .team_roster li .score.play_soon{
+        font-size: 9px;
+    }
+
+    .team_roster li.summary_line{
+        margin-right: 0;
+    }
+
+    .team_roster li.summary_line .score_wrapper.efficiency{
+        width: 92px;
+    }
+
+    div.team_roster{
+        overflow: auto;
+    }
+
 }
